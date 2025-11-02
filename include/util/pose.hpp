@@ -2,7 +2,7 @@
 #include <string>
 
 class Pose {
-    private: // personal information (PPI)
+    private:
         double x; // in inches
         double y; // in inches
         double theta; // in radians 
