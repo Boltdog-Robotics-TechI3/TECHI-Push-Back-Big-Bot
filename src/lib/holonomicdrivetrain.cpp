@@ -178,7 +178,7 @@ void HolonomicDrivetrain::setMotorSpeeds(std::initializer_list<int> speeds) {
     backLeftModule->move(speeds.begin()[2]);
     backRightModule->move(speeds.begin()[3]);
 
-    if (sideMotors != nullptr && speeds.begin()[4]) {
+    if (sideMotors != nullptr && speeds.size() >= 5) {
         sideMotors->move(speeds.begin()[4]);
     }
 }
