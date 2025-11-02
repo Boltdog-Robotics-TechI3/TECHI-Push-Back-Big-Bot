@@ -44,7 +44,7 @@ void HolonomicChassis::fieldCentricDrive(int leftX, int leftY, int rightX) {
  */
 void HolonomicChassis::robotCentricDrive(int leftX, int leftY, int rightX) {
     double y = (double)leftY;
-    double x = (double)leftY;
+    double x = (double)leftX;
     double r = scaleInput(rightX);
 
     double targetAngle = atan2(y, x);
