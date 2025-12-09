@@ -6,7 +6,9 @@
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
  */
-void initialize() {}
+void initialize() {
+	chassis.setInputScale(Chassis::SINSQUARED);
+}
 
 /**
  * Runs while the robot is in the disabled state of Field Management System or
@@ -54,6 +56,13 @@ void autonomous() {}
  */
 void opcontrol() {
 	while (true) {
+		int leftY = controller.get_analog(ANALOG_LEFT_Y);
+		int rightX = controller.get_analog(ANALOG_RIGHT_X);
+
+		chassis.arcade(leftY, rightX);
+
+		intakePeriodic();
+
 		pros::delay(20);
 	}
 }
