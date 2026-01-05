@@ -15,7 +15,7 @@ inline pros::Controller controller(pros::E_CONTROLLER_MASTER);
 // Motor Groups
 inline pros::MotorGroup rightMotors({18, 19, 20});
 inline pros::MotorGroup leftMotors({-11, -12, -13});
-inline pros::MotorGroup intake({-1, 2});
+inline pros::MotorGroup intake({-1, 2, 8});
 inline pros::Motor lift(3); 
 inline pros::Motor low_sorter(4); 
 inline pros::Motor ejector(9); 

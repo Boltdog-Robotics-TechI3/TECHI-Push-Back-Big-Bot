@@ -15,7 +15,7 @@ void intakePeriodic() {
         lift.move(127);
         low_sorter.move(127);
         ejector.move(127);
-        high_sorter.move(127); m
+        high_sorter.move(127);
     }
     else {
         intake.move(0);
