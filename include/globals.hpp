@@ -3,6 +3,9 @@
 // Libraries
 #include "api.h"
 #include "lib/api.hpp"
+#include "pros/adi.hpp"
+#include "pros/motors.hpp"
+#include <cstdint>
 
 // Bot measurements
 inline double wheel_diameter = 3.25;
@@ -13,13 +16,21 @@ inline double gear_ratio = 3.0/4.0;
 inline pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 // Motor Groups
-inline pros::MotorGroup rightMotors({18, 19, 20});
-inline pros::MotorGroup leftMotors({-11, -12, -13});
-inline pros::MotorGroup intake({-1, 2, 8});
-inline pros::Motor lift(3); 
-inline pros::Motor low_sorter(4); 
-inline pros::Motor ejector(9); 
-inline pros::Motor high_sorter(10); 
+inline pros::MotorGroup rightMotors({8, -9, 7, 10});
+inline pros::MotorGroup leftMotors({-4, -2, 3, -1});
+inline pros::MotorGroup intake({-14,15});
+inline pros::Motor middleScore( -18);
+inline pros::Motor motor19(19);
+inline pros::Motor motor11(11);
+inline pros::Motor motor20(20);
+inline pros::MotorGroup topScore({-16, -17});
+//inline pros::Motor lift(3); 
+//inline pros::Motor low_sorter(4); 
+//inline pros::Motor ejector(9); 
+//inline pros::Motor high_sorter(10); 
+inline pros::adi::Pneumatics leftDescore((uint8_t)'A', true);
+//inline pros::adi::Pneumatics rightDescore((uint8_t)'B', true);
+inline pros::adi::Pneumatics parkMech((uint8_t)'B', true);
 // Drivetrain
 inline DifferentialDrivetrain drivetrain(&leftMotors, &rightMotors, wheel_diameter, track_width, gear_ratio);
 

@@ -1,4 +1,6 @@
 #include "main.h"
+#include "globals.hpp"
+#include "pros/misc.h"
 #include "screen.h"
 
 /**
@@ -8,6 +10,7 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
+	parkMech.retract();
 	initializeScreen();
 	chassis.setInputScale(Chassis::SINSQUARED);
 }
@@ -57,6 +60,7 @@ void autonomous() {}
  * task, not resume it from where it left off.
  */
 void opcontrol() {
+	bool parkMechPossible = true;
 	while (true) {
 		int leftY = controller.get_analog(ANALOG_LEFT_Y);
 		int rightX = controller.get_analog(ANALOG_RIGHT_X);
@@ -64,6 +68,23 @@ void opcontrol() {
 		chassis.arcade(leftY, rightX);
 
 		intakePeriodic();
+
+		if (controller.get_digital_new_press(DIGITAL_L2)) {
+			leftDescore.toggle();
+		}
+		if (controller.get_digital_new_press(DIGITAL_DOWN) && parkMechPossible) {
+			parkMech.toggle();
+			parkMechPossible = false;
+		}
+		//secret unlock
+		if (controller.get_digital(DIGITAL_L1)
+			&& controller.get_digital(DIGITAL_L2)
+			&& controller.get_digital(DIGITAL_R1)
+			&& controller.get_digital(DIGITAL_R2)
+			&& !parkMechPossible) {
+				parkMech.retract();
+				parkMechPossible = true;
+			}
 
 		pros::delay(20);
 	}
