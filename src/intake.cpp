@@ -6,7 +6,7 @@ void intakeInitialize() {}
 
 void intakePeriodic() {
     //All intake
-    if (controller.get_digital(DIGITAL_L1)) {
+    if (controller.get_digital(DIGITAL_L2)) {
         intake.move(127);
         motor19.move(127);
         motor11.move(127);
@@ -18,9 +18,10 @@ void intakePeriodic() {
     }
     //middlescore
     else if (controller.get_digital(DIGITAL_R2)) {
-        middleScore.move(127);
+        middleScore.move(38.1);
         motor19.move(-127);
         motor11.move(-127);
+        motor20.move(38.1);
     }
     //topscore
     //16 back 17 back 18 for 19 back

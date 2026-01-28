@@ -65,11 +65,11 @@ void opcontrol() {
 		int leftY = controller.get_analog(ANALOG_LEFT_Y);
 		int rightX = controller.get_analog(ANALOG_RIGHT_X);
 
-		chassis.arcade(leftY, rightX);
+		chassis.arcade(leftY,rightX);
 
 		intakePeriodic();
 
-		if (controller.get_digital_new_press(DIGITAL_L2)) {
+		if (controller.get_digital_new_press(DIGITAL_L1)) {
 			leftDescore.toggle();
 		}
 		if (controller.get_digital_new_press(DIGITAL_DOWN) && parkMechPossible) {
