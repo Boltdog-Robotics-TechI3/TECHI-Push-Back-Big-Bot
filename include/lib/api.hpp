@@ -9,7 +9,8 @@
 #include "lib/odometry.hpp"
 #include "lib/pid.hpp"
 #include "lib/trackingwheel.hpp"
-#include "autoSelector.hpp"
+#include "lib/autoselector.hpp"
+
 #include "util/pose.hpp"
 #include "util/angle.hpp"
 #include "util/distance.hpp"
