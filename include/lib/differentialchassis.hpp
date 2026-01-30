@@ -112,8 +112,9 @@ class DifferentialChassis : public Chassis {
          * negative distance drives backwards.
          * 
          * @param distance the distance to drive in inches.
+         * @param timeout the timeout time in ms
          */
-        void moveDistance(double distance);
+        void moveDistance(double distance, double timeout = 5000);
 
         /**
          * @brief Turn the robot to a specific angle using PID control.

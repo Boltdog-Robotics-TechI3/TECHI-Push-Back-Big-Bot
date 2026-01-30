@@ -5,6 +5,8 @@
 #include "lib/api.hpp"
 #include "pros/adi.hpp"
 #include "pros/motors.hpp"
+#include "pros/optical.hpp"
+#include "pros/vision.h"
 #include <cstdint>
 
 // Bot measurements
@@ -23,24 +25,39 @@ inline pros::Motor middleScore( -18);
 inline pros::Motor motor19(19);
 inline pros::Motor motor11(11);
 inline pros::Motor motor20(20);
-inline pros::MotorGroup topScore({-16, -17});
-//inline pros::Motor lift(3); 
-//inline pros::Motor low_sorter(4); 
-//inline pros::Motor ejector(9); 
-//inline pros::Motor high_sorter(10); 
+inline pros::Motor topScore( -16);
+inline pros::Motor lowerTopScore(-17);
 inline pros::adi::Pneumatics leftDescore((uint8_t)'A', true);
-//inline pros::adi::Pneumatics rightDescore((uint8_t)'B', true);
 inline pros::adi::Pneumatics parkMech((uint8_t)'B', true);
+
+//Color Sensor
+inline pros::Optical colorSensor(21);
+
+// Chassis PID Controllers
+inline PIDController lateral(8, 0, 0.1); 
+inline PIDController turn(60, 0.2, 3);
+inline PIDController align(30, 0, 0);
+
 // Drivetrain
 inline DifferentialDrivetrain drivetrain(&leftMotors, &rightMotors, wheel_diameter, track_width, gear_ratio);
 
 // Tracking Wheel
-inline pros::IMU imu(7);
-inline TrackingWheel horizontalTrackingWheel(5, 2.08, 0, WheelPosition::BACK);
-inline TrackingWheel verticalTrackingWheel(-4, 2.08, 0.25, WheelPosition::LEFT);
+inline pros::IMU imu(6);
+inline TrackingWheel horizontalTrackingWheel(-12, 2.08, -6, WheelPosition::BACK);
+inline TrackingWheel verticalTrackingWheel(-13, 2.08, 0.75, WheelPosition::LEFT);
 
 // Odometry
 inline Odometry odometry(&verticalTrackingWheel, NULL, &horizontalTrackingWheel, &imu);
 
 // Chassis
-inline DifferentialChassis chassis(&drivetrain, &odometry);
+inline DifferentialChassis chassis(&drivetrain, &odometry, &lateral, &turn, &align);
+
+
+// Comp Specifications
+inline bool skills = false;
+inline bool match = true;
+inline bool elim = false;
+inline bool qual = true;
+inline bool redAlliance = true;
+inline bool blueAlliance = false;
+inline int autoSelection = 0; 

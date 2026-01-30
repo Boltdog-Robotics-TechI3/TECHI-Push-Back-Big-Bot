@@ -5,14 +5,6 @@ lv_obj_t* textBox2; // Text box for Button 2
 lv_obj_t* textBox3; // Text box for Button 3
 
 int autoselector;
-// Comp Specifications
-bool skills = false;
-bool match = true;
-bool elim = false;
-bool qual = true;
-bool redAlliance = true;
-bool blueAlliance = false;
-int autoSelection = 0; 
 
 
 void initializeScreen() {

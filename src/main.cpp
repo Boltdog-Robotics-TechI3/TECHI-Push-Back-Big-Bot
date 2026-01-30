@@ -1,7 +1,10 @@
 #include "main.h"
 #include "globals.hpp"
+#include "lib/chassis.hpp"
+#include "lib/pid.hpp"
 #include "pros/misc.h"
-#include "screen.h"
+#include "autonomous.hpp"
+#include <string>
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -10,8 +13,9 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	parkMech.retract();
+	parkMech.toggle();
 	initializeScreen();
+	chassis.reset();
 	chassis.setInputScale(Chassis::SINSQUARED);
 }
 
@@ -44,7 +48,9 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+	matchAuto();
+}
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -61,11 +67,14 @@ void autonomous() {}
  */
 void opcontrol() {
 	bool parkMechPossible = true;
+	chassis.startTracking();
+	
 	while (true) {
 		int leftY = controller.get_analog(ANALOG_LEFT_Y);
 		int rightX = controller.get_analog(ANALOG_RIGHT_X);
 
 		chassis.arcade(leftY,rightX);
+		controller.set_text(0,0,std::to_string(colorSensor.get_hue()));
 
 		intakePeriodic();
 
@@ -76,13 +85,16 @@ void opcontrol() {
 			parkMech.toggle();
 			parkMechPossible = false;
 		}
+		if (controller.get_digital_new_press(DIGITAL_UP)) {
+			matchAuto();
+		}
 		//secret unlock
 		if (controller.get_digital(DIGITAL_L1)
 			&& controller.get_digital(DIGITAL_L2)
 			&& controller.get_digital(DIGITAL_R1)
 			&& controller.get_digital(DIGITAL_R2)
 			&& !parkMechPossible) {
-				parkMech.retract();
+				parkMech.toggle();
 				parkMechPossible = true;
 			}
 

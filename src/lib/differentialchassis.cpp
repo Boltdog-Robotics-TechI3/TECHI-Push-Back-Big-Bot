@@ -296,15 +296,20 @@ void DifferentialChassis::turnThenMoveToPose(const Pose& targetPose, const bool 
     drivetrain->setMotorSpeeds({0, 0});
 }
 
-void DifferentialChassis::moveDistance(double distance) {
+void DifferentialChassis::moveDistance(double distance, double timeout) {
+    isAtSetpoint = false;
+
     if (!lateralPID || !turnPID) {
         return;
     }
     lateralPID->reset();
 
-    Timer timeoutTimer(5000, +[]() { Chassis::isAtSetpoint = true; });
+    Timer timeoutTimer(timeout, +[]() { Chassis::isAtSetpoint = true; });
     Timer smallErrorTimer(500, +[]() { Chassis::isAtSetpoint = true; });
     Timer largeErrorTimer(2000, +[]() { Chassis::isAtSetpoint = true; });
+
+    lateralPID->setSmallErrorRange(1);
+    lateralPID->setLargeErrorRange(2);
 
     timeoutTimer.start();
     double initialPosition = odometry ? odometry->getReadings()[0] : (drivetrain->getMotors()[0]->get_position() + drivetrain->getMotors()[1]->get_position()) / 2.0;
