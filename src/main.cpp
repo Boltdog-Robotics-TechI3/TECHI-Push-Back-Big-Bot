@@ -67,7 +67,7 @@ void autonomous() {
  */
 void opcontrol() {
 	bool parkMechPossible = true;
-	chassis.startTracking();
+	
 	
 	while (true) {
 		int leftY = controller.get_analog(ANALOG_LEFT_Y);
@@ -85,9 +85,9 @@ void opcontrol() {
 			parkMech.toggle();
 			parkMechPossible = false;
 		}
-		if (controller.get_digital_new_press(DIGITAL_UP)) {
-			matchAuto();
-		}
+		// if (controller.get_digital_new_press(DIGITAL_UP)) {
+		// 	matchAuto();
+		// }
 		//secret unlock
 		if (controller.get_digital(DIGITAL_L1)
 			&& controller.get_digital(DIGITAL_L2)

@@ -25,16 +25,12 @@ void matchAuto() {
     chassis.turnAngle(90);
     chassis.moveDistance(13,2000);
     intakeOnAll();
-
-    while (true) {
-        if (redAlliance && colorSensor.get_hue() > 100) {
-            break;
-        }
-        if (blueAlliance && colorSensor.get_hue() < 30) {
-            break;
-        }
-        hump(300);
-    }
+    hump(300);
+    hump(300);
+    hump(300);
+    hump(300);
+    hump(300);
+    hump(300);
     pros::delay(100);
     intakeOffAll();
     chassis.moveDistance(-6, 3000);
