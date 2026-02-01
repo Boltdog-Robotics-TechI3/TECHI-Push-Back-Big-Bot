@@ -31,6 +31,8 @@ void matchAuto() {
     hump(300);
     hump(300);
     hump(300);
+    hump(300);
+    hump(300);
     pros::delay(100);
     intakeOffAll();
     chassis.moveDistance(-6, 3000);

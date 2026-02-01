@@ -55,10 +55,10 @@ void intakeTopScore() {
 }
 
 void outtake() {
-    intake.move(-127);
-    motor19.move(-127);
-    motor11.move(-127);
-    motor20.move(-127);
+    intake.move(-67);
+    motor19.move(-67);
+    motor11.move(-67);
+    motor20.move(-67);
 }
 
 void intakePeriodic() {
