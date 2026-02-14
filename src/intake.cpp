@@ -33,6 +33,14 @@ void outtake() {
     intake.move(-127);
 }
 
+void loadingUp(){ 
+    loaderMech.move(127);
+}
+
+void loadingDown(){
+    loaderMech.move(-127);
+}
+
 void intakePeriodic() {
     //All intake
     if (controller.get_digital(DIGITAL_L2)) {
@@ -53,5 +61,13 @@ void intakePeriodic() {
     }
     else {
         intakeOffAll();
+    }
+
+    // This is the loader mech for the intake, keep in mind this can break
+    // If it is run in one direction for too long
+    if(controller.get_digital(DIGITAL_UP)){
+        loadingUp();
+    } else if(controller.get_digital(DIGITAL_DOWN)){
+        loadingDown();
     }
 }

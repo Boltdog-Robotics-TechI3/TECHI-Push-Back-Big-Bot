@@ -20,9 +20,10 @@ inline pros::Controller controller(pros::E_CONTROLLER_MASTER);
 // Motor Groups
 inline pros::MotorGroup rightMotors({18, 19, -20, 17});
 inline pros::MotorGroup leftMotors({-12, -14, 13, -15});
-inline pros::MotorGroup intake({-9, 10});
-inline pros::Motor middleScore(-6);
+inline pros::MotorGroup intake({-9, 8});
+inline pros::Motor middleScore(-10);
 inline pros::Motor topScore(-7);
+inline pros::Motor loaderMech(5);
 
 // Pneumatics
 inline pros::adi::Pneumatics leftDescore((uint8_t)'A', true);

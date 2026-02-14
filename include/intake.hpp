@@ -13,3 +13,7 @@ void intakeMiddleScore();
 void intakeTopScore();
 
 void outtake();
+
+void loadingUp();
+
+void loadingDown();
