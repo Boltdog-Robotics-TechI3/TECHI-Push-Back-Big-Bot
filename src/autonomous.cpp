@@ -22,7 +22,7 @@ void matchAuto() {
 	chassis.startTracking();
     chassis.moveDistance(26,3000);
     //intake
-    chassis.turnAngle(90);
+    chassis.turnToAngle(90, 1000);
     chassis.moveDistance(13,2000);
     intakeOnAll();
     hump(300);
@@ -36,27 +36,27 @@ void matchAuto() {
     pros::delay(100);
     intakeOffAll();
     chassis.moveDistance(-6, 3000);
-    chassis.turnAngle(45);
+    chassis.turnToAngle(45, 1000);
     outtake();
     pros::delay(600);
     intakeOffAll();
 
     //Score
-    chassis.turnAngle(270);
+    chassis.turnToAngle(270, 1000);
     intakeOnAll();
     chassis.moveDistance(12,2000);
     intakeOffAll();
-    chassis.turnAngle(280);
+    chassis.turnToAngle(280, 1000);
     intakeTopScore();
     pros::delay(2500);
     // hump(150);
     // hump(150);
     // hump(150);
     // pros::delay(1250);
-    chassis.turnAngle(270);
+    chassis.turnToAngle(270, 1000);
     intakeOffAll();
-    chassis.moveDistance(-6);
-    chassis.turnAngle(90);
+    chassis.moveDistance(-6, 1000);
+    chassis.turnToAngle(90, 1000);
     intakeOnAll();
     chassis.moveDistance(18, 2000);
 
@@ -94,12 +94,12 @@ void matchAuto() {
     // hump(300);
 
     chassis.moveDistance(-12, 3000);
-    chassis.turnAngle(270);
+    chassis.turnToAngle(270, 1000);
     intakeOffAll();
-    chassis.moveDistance(7,1000);
-    chassis.turnAngle(285);
+    chassis.moveDistance(7, 1000);
+    chassis.turnToAngle(285, 1000);
     intakeTopScore();
     pros::delay(4000);
     intakeOffAll();
-    chassis.turnAngle(270);
+    chassis.turnToAngle(270, 1000);
 }

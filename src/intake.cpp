@@ -8,57 +8,29 @@ void intakeInitialize() {}
 
 void intakeOnAll() {
     intake.move(127);
-    motor19.move(127);
-    motor11.move(127);
-    motor20.move(127);
-}
-
-//unused for now
-void intakeOnAllAlternative() {
-    intake.move(127);
-    //motor19.move(-127);
-    motor11.move(127);
-    motor20.move(127);
-    //18 normal
-    middleScore.move(127);
-    //17 inverted
-    lowerTopScore.move(-127);
-    //16 normal
-    topScore.move(127);
 }
 
 void intakeOffAll() {
     intake.move(0);
-    motor19.move(0);
-    motor11.move(0);
     middleScore.move(0);
     topScore.move(0);
-    lowerTopScore.move(0);
-    motor20.move(0);
+
 }
 
 void intakeMiddleScore() {
-    middleScore.move(38.1);
-    motor19.move(-127);
-    motor11.move(-127);
-    motor20.move(38.1);
-    lowerTopScore.move(127);
+    middleScore.move(127);
+    intake.move(127);
+
 }
 
 void intakeTopScore() {
     middleScore.move(-127);
-    motor19.move(-127);
-    motor11.move(-127);
-    topScore.move(127);
-    lowerTopScore.move(127);
-    motor20.move(127);
+    topScore.move(90);
+    intake.move(217);
 }
 
 void outtake() {
-    intake.move(-67);
-    motor19.move(-67);
-    motor11.move(-67);
-    motor20.move(-67);
+    intake.move(-127);
 }
 
 void intakePeriodic() {

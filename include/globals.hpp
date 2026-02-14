@@ -18,15 +18,13 @@ inline double gear_ratio = 3.0/4.0;
 inline pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 // Motor Groups
-inline pros::MotorGroup rightMotors({8, -9, 7, 10});
-inline pros::MotorGroup leftMotors({-4, -2, 3, -1});
-inline pros::MotorGroup intake({-14,15});
-inline pros::Motor middleScore( -18);
-inline pros::Motor motor19(19);
-inline pros::Motor motor11(11);
-inline pros::Motor motor20(20);
-inline pros::Motor topScore( -16);
-inline pros::Motor lowerTopScore(-17);
+inline pros::MotorGroup rightMotors({18, 19, -20, 17});
+inline pros::MotorGroup leftMotors({-12, -14, 13, -15});
+inline pros::MotorGroup intake({-9, 10});
+inline pros::Motor middleScore(-6);
+inline pros::Motor topScore(-7);
+
+// Pneumatics
 inline pros::adi::Pneumatics leftDescore((uint8_t)'A', true);
 inline pros::adi::Pneumatics parkMech((uint8_t)'B', true);
 
@@ -39,19 +37,18 @@ inline PIDController turn(60, 0.2, 3);
 inline PIDController align(30, 0, 0);
 
 // Drivetrain
-inline DifferentialDrivetrain drivetrain(&leftMotors, &rightMotors, wheel_diameter, track_width, gear_ratio);
+inline TankDrivetrain drivetrain(&leftMotors, &rightMotors, wheel_diameter, track_width, gear_ratio);
 
 // Tracking Wheel
 inline pros::IMU imu(6);
-inline TrackingWheel horizontalTrackingWheel(-12, 2.08, -6, WheelPosition::BACK);
-inline TrackingWheel verticalTrackingWheel(-13, 2.08, 0.75, WheelPosition::LEFT);
+inline TrackingWheel horizontalTrackingWheel(-12, 3.25, 0.25, WheelPosition::HORIZONTAL);
+inline TrackingWheel verticalTrackingWheel(-13, 3.25, 0.75, WheelPosition::VERTICAL);
 
 // Odometry
-inline Odometry odometry(&verticalTrackingWheel, NULL, &horizontalTrackingWheel, &imu);
+inline OdomSensors odometry(&verticalTrackingWheel, &horizontalTrackingWheel, &imu);
 
 // Chassis
-inline DifferentialChassis chassis(&drivetrain, &odometry, &lateral, &turn, &align);
-
+inline TankChassis chassis(&drivetrain, &odometry, &lateral, &turn, &align);
 
 // Comp Specifications
 inline bool skills = false;

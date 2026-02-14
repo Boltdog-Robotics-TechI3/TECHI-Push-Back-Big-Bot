@@ -17,6 +17,7 @@ void initialize() {
 	initializeScreen();
 	chassis.reset();
 	chassis.setInputScale(Chassis::SINSQUARED);
+	chassis.startTracking();
 }
 
 /**
@@ -74,7 +75,7 @@ void opcontrol() {
 		int rightX = controller.get_analog(ANALOG_RIGHT_X);
 
 		chassis.arcade(leftY,rightX);
-		controller.set_text(0,0,std::to_string(colorSensor.get_hue()));
+		controller.set_text(0,0, (chassis.getPose().to_string()));
 
 		intakePeriodic();
 
