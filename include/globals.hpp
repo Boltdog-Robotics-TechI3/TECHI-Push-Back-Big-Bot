@@ -28,9 +28,6 @@ inline pros::Motor topScore(-7);
 inline pros::adi::Pneumatics leftDescore((uint8_t)'A', true);
 inline pros::adi::Pneumatics parkMech((uint8_t)'B', true);
 
-//Color Sensor
-inline pros::Optical colorSensor(21);
-
 // Chassis PID Controllers
 inline PIDController lateral(8, 0, 0.1); 
 inline PIDController turn(60, 0.2, 3);
@@ -40,9 +37,9 @@ inline PIDController align(30, 0, 0);
 inline TankDrivetrain drivetrain(&leftMotors, &rightMotors, wheel_diameter, track_width, gear_ratio);
 
 // Tracking Wheel
-inline pros::IMU imu(6);
-inline TrackingWheel horizontalTrackingWheel(-12, 3.25, 0.25, WheelPosition::HORIZONTAL);
-inline TrackingWheel verticalTrackingWheel(-13, 3.25, 0.75, WheelPosition::VERTICAL);
+inline pros::IMU imu(16);
+inline TrackingWheel horizontalTrackingWheel(3, 3.25, 0.25, WheelPosition::HORIZONTAL);
+inline TrackingWheel verticalTrackingWheel(-2, 3.25, -1.0, WheelPosition::VERTICAL);
 
 // Odometry
 inline OdomSensors odometry(&verticalTrackingWheel, &horizontalTrackingWheel, &imu);
