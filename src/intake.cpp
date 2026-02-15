@@ -34,12 +34,16 @@ void outtake() {
 }
 
 void loadingUp(){ 
+    loaderMech.set_brake_mode(MOTOR_BRAKE_HOLD);
     loaderMech.move(127);
 }
 
 void loadingDown(){
+    loaderMech.set_brake_mode(MOTOR_BRAKE_COAST);
     loaderMech.move(-127);
+    
 }
+
 
 void intakePeriodic() {
     //All intake
@@ -48,12 +52,13 @@ void intakePeriodic() {
     }
     //middlescore
     else if (controller.get_digital(DIGITAL_R2)) {
-        intakeMiddleScore();
+        intakeTopScore();
     }
     //topscore
     //16 back 17 back 18 for 19 back
     else if (controller.get_digital(DIGITAL_R1)) {
-        intakeTopScore();
+    
+        intakeMiddleScore();
     }
     //outtake
     else if (controller.get_digital(DIGITAL_X)) {
@@ -67,7 +72,11 @@ void intakePeriodic() {
     // If it is run in one direction for too long
     if(controller.get_digital(DIGITAL_UP)){
         loadingUp();
+        
     } else if(controller.get_digital(DIGITAL_DOWN)){
         loadingDown();
+    } else{
+        loaderMech.move(0);
     }
+
 }

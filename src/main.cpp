@@ -75,29 +75,31 @@ void opcontrol() {
 		int rightX = controller.get_analog(ANALOG_RIGHT_X);
 
 		chassis.arcade(leftY,rightX);
-		controller.set_text(0,0, (chassis.getPose().to_string()));
+		//controller.set_text(0,0, (chassis.getPose().to_string()));
+		controller.set_text(0,0, std::to_string((chassis.getPose().radToDeg(chassis.getPose().getTheta()))));
 
 		intakePeriodic();
 
 		if (controller.get_digital_new_press(DIGITAL_L1)) {
 			leftDescore.toggle();
 		}
-		if (controller.get_digital_new_press(DIGITAL_DOWN) && parkMechPossible) {
-			parkMech.toggle();
-			parkMechPossible = false;
-		}
-		// if (controller.get_digital_new_press(DIGITAL_UP)) {
-		// 	matchAuto();
-		// }
-		//secret unlock
+		 if (controller.get_digital_new_press(DIGITAL_A)) {
+		 	matchAuto();
+		 }
+		//secret lock
 		if (controller.get_digital(DIGITAL_L1)
 			&& controller.get_digital(DIGITAL_L2)
 			&& controller.get_digital(DIGITAL_R1)
-			&& controller.get_digital(DIGITAL_R2)
-			&& !parkMechPossible) {
-				parkMech.toggle();
-				parkMechPossible = true;
+			&& controller.get_digital(DIGITAL_R2)) {
+				parkMech.retract();
 			}
+		// secret unlock
+		if(controller.get_digital_new_press(DIGITAL_A)
+		 	&& controller.get_digital_new_press(DIGITAL_B)
+		  	&& controller.get_digital_new_press(DIGITAL_Y)
+		   	&& controller.get_digital_new_press(DIGITAL_X)){
+				parkMech.extend();
+    } 
 
 		pros::delay(20);
 	}

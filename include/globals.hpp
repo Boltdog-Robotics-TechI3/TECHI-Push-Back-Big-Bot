@@ -21,7 +21,7 @@ inline pros::Controller controller(pros::E_CONTROLLER_MASTER);
 inline pros::MotorGroup rightMotors({18, 19, -20, 17});
 inline pros::MotorGroup leftMotors({-12, -14, 13, -15});
 inline pros::MotorGroup intake({-9, 8});
-inline pros::Motor middleScore(-10);
+inline pros::Motor middleScore(10);
 inline pros::Motor topScore(-7);
 inline pros::Motor loaderMech(5);
 
@@ -30,9 +30,9 @@ inline pros::adi::Pneumatics leftDescore((uint8_t)'A', true);
 inline pros::adi::Pneumatics parkMech((uint8_t)'B', true);
 
 // Chassis PID Controllers
-inline PIDController lateral(8, 0, 0.1); 
-inline PIDController turn(60, 0.2, 3);
-inline PIDController align(30, 0, 0);
+inline PIDController lateral(6, 0.0001 ,0.1); 
+inline PIDController turn(90, 0.0075, 0.1);
+inline PIDController align(45, 0, 0);
 
 // Drivetrain
 inline TankDrivetrain drivetrain(&leftMotors, &rightMotors, wheel_diameter, track_width, gear_ratio);

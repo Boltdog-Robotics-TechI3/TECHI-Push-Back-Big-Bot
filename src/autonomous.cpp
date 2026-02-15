@@ -5,6 +5,7 @@
 #include "pros/rtos.hpp"
 #include "util/pose.hpp"
 #include <numbers>
+#include "pros/misc.h"
 
 void hump(double ms) {
     leftMotors.move(-127);
@@ -18,6 +19,24 @@ void hump(double ms) {
     pros::delay(ms/2);
 }
 
+void loaderDown(){
+    loaderMech.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+    loaderMech.move(-50);
+    pros::delay(1500);
+    loaderMech.move(0);
+}
+
+void loaderUp(){
+    loaderMech.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+    loaderMech.move(50);
+    pros::delay(1500);
+    loaderMech.move(0);
+}
+
 void matchAuto() {
-	chassis.moveToPose(Pose(0, 24, 0), 1500, 50);
+	chassis.moveToPose(Pose(0,32,0),1500,50);
+    chassis.turnToAngle(90,1500);
+    loaderUp();
+    intake.move(127);
+
 }
