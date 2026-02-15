@@ -84,7 +84,7 @@ void opcontrol() {
 			leftDescore.toggle();
 		}
 		 if (controller.get_digital_new_press(DIGITAL_A)) {
-		 	matchAuto();
+		 	//matchAuto();
 		 }
 		//secret lock
 		if (controller.get_digital(DIGITAL_L1)

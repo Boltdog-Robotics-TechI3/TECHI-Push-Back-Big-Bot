@@ -36,7 +36,6 @@ void loaderUp(){
 void matchAuto() {
 	chassis.moveToPose(Pose(0,-32,0),1500,50);
     chassis.turnToAngle(90,1500);
-    //loaderDown();
     intake.move(127);
     chassis.moveToPose(Pose(-8,-32,0),1500,50);
     hump(300);
@@ -49,5 +48,9 @@ void matchAuto() {
     chassis.moveToPose(Pose(12,-32,0),1500,80);
     middleScore.move(-127);
     topScore.move(90);
+    pros::delay(8000);
+    intake.move(9);
+    middleScore.move(0);
+    topScore.move(0);
 
 }
