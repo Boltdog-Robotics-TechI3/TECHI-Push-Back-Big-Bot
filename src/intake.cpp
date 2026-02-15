@@ -25,7 +25,7 @@ void intakeMiddleScore() {
 
 void intakeTopScore() {
     middleScore.move(-127);
-    topScore.move(90);
+    topScore.move(60);
     intake.move(217);
 }
 
