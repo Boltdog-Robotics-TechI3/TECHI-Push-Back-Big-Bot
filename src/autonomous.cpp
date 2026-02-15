@@ -34,9 +34,9 @@ void loaderUp(){
 }
 
 void matchAuto() {
-	/*chassis.moveToPose(Pose(0,-32,0),1500,50);
+	chassis.moveToPose(Pose(0,-32,0),1500,50);
     chassis.turnToAngle(90,1500);
-    intake.move(127);
+    /*intake.move(127);
     chassis.moveToPose(Pose(-8,-32,0),1500,50);
     hump(300);
     hump(300);
@@ -45,14 +45,18 @@ void matchAuto() {
     hump(300);
     hump(300);
     hump(300);
-    chassis.moveToPose(Pose(12,-32,0),1500,80);
+    */
+    chassis.moveToPose(Pose(-20,-32,0),1500,80);
     middleScore.move(-127);
     topScore.move(90);
-    pros::delay(8000);
-    intake.move(0);
+    pros::delay(1500);
+    //intake.move(0);
     middleScore.move(0);
-    topScore.move(0); */
-    pros::delay(3000);
-    chassis.moveToPose(Pose(0,7,0),1500,90);
+    topScore.move(0); 
+    chassis.moveToPose(Pose(-17,-32,0),1500,50);
+    chassis.turnToAngle(0,1500);
+
+    chassis.turnToAngle(90,1500);
+    chassis.moveToPose(Pose(-17,-37,0),1500,80);
 
 }
