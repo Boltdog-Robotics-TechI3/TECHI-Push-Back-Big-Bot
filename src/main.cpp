@@ -94,10 +94,7 @@ void opcontrol() {
 				parkMech.retract();
 			}
 		// secret unlock
-		if(controller.get_digital_new_press(DIGITAL_A)
-		 	&& controller.get_digital_new_press(DIGITAL_B)
-		  	&& controller.get_digital_new_press(DIGITAL_Y)
-		   	&& controller.get_digital_new_press(DIGITAL_X)){
+		if(controller.get_digital_new_press(DIGITAL_B)){
 				parkMech.extend();
     } 
 
