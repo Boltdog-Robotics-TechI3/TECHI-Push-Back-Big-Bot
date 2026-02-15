@@ -8,14 +8,14 @@
 #include "pros/misc.h"
 
 void hump(double ms) {
-    leftMotors.move(-127);
-    rightMotors.move(-127);
+    leftMotors.move(127);
+    rightMotors.move(127);
     pros::delay(ms/6);
     leftMotors.move(0);
     rightMotors.move(0);
     pros::delay(ms/3);
-    leftMotors.move(127);
-    rightMotors.move(127);
+    leftMotors.move(-127);
+    rightMotors.move(-127);
     pros::delay(ms/2);
 }
 
@@ -34,9 +34,20 @@ void loaderUp(){
 }
 
 void matchAuto() {
-	chassis.moveToPose(Pose(0,32,0),1500,50);
+	chassis.moveToPose(Pose(0,-32,0),1500,50);
     chassis.turnToAngle(90,1500);
-    loaderUp();
+    //loaderDown();
     intake.move(127);
+    chassis.moveToPose(Pose(-8,-32,0),1500,50);
+    hump(300);
+    hump(300);
+    hump(300);
+    hump(300);
+    hump(300);
+    hump(300);
+    hump(300);
+    chassis.moveToPose(Pose(12,-32,0),1500,80);
+    middleScore.move(-127);
+    topScore.move(90);
 
 }
