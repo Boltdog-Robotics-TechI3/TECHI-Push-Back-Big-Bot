@@ -13,11 +13,10 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	parkMech.toggle();
-	initializeScreen();
-	chassis.reset();
-	chassis.setInputScale(Chassis::SINSQUARED);
-	chassis.startTracking();
+	// parkMech.toggle();
+	// initializeScreen();
+	// chassis.reset();
+	// chassis.setInputScale(Chassis::SINSQUARED);
 }
 
 /**
@@ -50,7 +49,7 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	matchAuto();
+	// matchAuto();
 }
 
 /**
@@ -78,25 +77,59 @@ void opcontrol() {
 		//controller.set_text(0,0, (chassis.getPose().to_string()));
 		controller.set_text(0,0, std::to_string((chassis.getPose().radToDeg(chassis.getPose().getTheta()))));
 
-		intakePeriodic();
+		//intakePeriodic();
 
 		if (controller.get_digital_new_press(DIGITAL_L1)) {
-			leftDescore.toggle();
+			wingMech.move(-60);
 		}
-		 if (controller.get_digital_new_press(DIGITAL_A)) {
-		 	//matchAuto();
-		 }
-		//secret lock
-		if (controller.get_digital(DIGITAL_L1)
-			&& controller.get_digital(DIGITAL_L2)
-			&& controller.get_digital(DIGITAL_R1)
-			&& controller.get_digital(DIGITAL_R2)) {
-				parkMech.retract();
-			}
-		// secret unlock
-		if(controller.get_digital_new_press(DIGITAL_B)){
-				parkMech.extend();
-    } 
+		else if (controller.get_digital_new_press(DIGITAL_L2)) {
+			wingMech.move(60);
+		}
+		else if (controller.get_digital_new_release(DIGITAL_L1) || controller.get_digital_new_release(DIGITAL_L2)) {
+			wingMech.move(0);
+		}
+
+		if (controller.get_digital_new_press(DIGITAL_DOWN)){
+			wingMech.move(127);
+		}
+		else if (controller.get_digital_new_press(DIGITAL_UP)){
+			wingMech.move(-127);
+		}
+		else if (controller.get_digital_new_release(DIGITAL_DOWN) || controller.get_digital_new_release(DIGITAL_UP)){
+			wingMech.move(0);
+		}
+
+		if (controller.get_digital_new_press(DIGITAL_X)) {
+			intakeBottomFront.move(127);
+			intakeTopFront.move(-127);
+			intakeBack.move(127);
+		}
+		else if (controller.get_digital_new_press(DIGITAL_B)) {
+			intakeBottomFront.move(-67);
+			intakeTopFront.move(-67);
+			intakeBack.move(-67);
+		}
+		else if (controller.get_digital_new_release(DIGITAL_X) || controller.get_digital_new_release(DIGITAL_B)) {
+			intakeBottomFront.move(0);
+			intakeTopFront.move(0);
+			intakeBack.move(0);
+		}
+
+		if (controller.get_digital_new_press(DIGITAL_R1)){
+			intakeBottomFront.move(127);
+			intakeTopFront.move(-127);
+			intakeBack.move(127);
+		}
+		else if (controller.get_digital_new_press(DIGITAL_R2)) {
+			intakeBottomFront.move(127);
+			intakeTopFront.move(127);
+			intakeBack.move(127);
+		}
+		else if (controller.get_digital_new_release(DIGITAL_R1) || controller.get_digital_new_release(DIGITAL_R2)) {
+			intakeBottomFront.move(0);
+			intakeTopFront.move(0);
+			intakeBack.move(0);
+		}
 
 		pros::delay(20);
 	}

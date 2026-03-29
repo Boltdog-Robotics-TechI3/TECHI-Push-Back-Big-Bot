@@ -10,24 +10,28 @@
 #include <cstdint>
 
 // Bot measurements
-inline double wheel_diameter = 3.25;
-inline double track_width = 10.75;
-inline double gear_ratio = 3.0/4.0;
+inline double wheel_diameter = 2.75;
+inline double track_width = 12;
+inline double gear_ratio = 1;
 
 // Controller
 inline pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 // Motor Groups
-inline pros::MotorGroup rightMotors({12, 14, -13, 15});
-inline pros::MotorGroup leftMotors({-18, -19, 20, -17});
-inline pros::MotorGroup intake({-9, 8});
-inline pros::Motor middleScore(10);
-inline pros::Motor topScore(-7);
-inline pros::Motor loaderMech(5);
-
-// Pneumatics
-inline pros::adi::Pneumatics leftDescore((uint8_t)'A', true);
-inline pros::adi::Pneumatics parkMech((uint8_t)'B', true);
+inline pros::MotorGroup rightMotors({2, 16});
+inline pros::MotorGroup leftMotors({-18, -15});
+inline pros::MotorGroup intakeBottomFront({-14, -13});
+inline pros::MotorGroup intakeTopFront({12, -1});
+inline pros::MotorGroup intakeBack({-17, -19, -20});
+inline pros::MotorGroup wingMech({-11});
+// inline pros::Motor middleScore( -18);
+// inline pros::Motor motor19(19);
+// inline pros::Motor motor11(11);
+// inline pros::Motor motor20(20);
+// inline pros::Motor topScore( -16);
+// inline pros::Motor lowerTopScore(-17);
+// inline pros::adi::Pneumatics leftDescore((uint8_t)'A', true);
+// inline pros::adi::Pneumatics parkMech((uint8_t)'B', true);
 
 // Chassis PID Controllers
 inline PIDController lateral(6, 0.0001 ,0.1); 

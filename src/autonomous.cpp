@@ -7,65 +7,100 @@
 #include <numbers>
 #include "pros/misc.h"
 
-void hump(double ms) {
-    leftMotors.move(127);
-    rightMotors.move(127);
-    pros::delay(ms/6);
-    leftMotors.move(0);
-    rightMotors.move(0);
-    pros::delay(ms/3);
-    leftMotors.move(-127);
-    rightMotors.move(-127);
-    pros::delay(ms/2);
-}
+// void hump(double ms) {
+//     leftMotors.move(-127);
+//     rightMotors.move(-127);
+//     pros::delay(ms/6);
+//     leftMotors.move(0);
+//     rightMotors.move(0);
+//     pros::delay(ms/3);
+//     leftMotors.move(127);
+//     rightMotors.move(127);
+//     pros::delay(ms/2);
+// }
 
-void loaderDown(){
-    loaderMech.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-    loaderMech.move(-50);
-    pros::delay(1500);
-    loaderMech.move(0);
-}
+// void matchAuto() {
+// 	chassis.startTracking();
+//     chassis.moveDistance(26,3000);
+//     //intake
+//     chassis.turnAngle(90);
+//     chassis.moveDistance(13,2000);
+//     intakeOnAll();
+//     hump(300);
+//     hump(300);
+//     hump(300);
+//     hump(300);
+//     hump(300);
+//     hump(300);
+//     hump(300);
+//     hump(300);
+//     pros::delay(100);
+//     intakeOffAll();
+//     chassis.moveDistance(-6, 3000);
+//     chassis.turnAngle(45);
+//     outtake();
+//     pros::delay(600);
+//     intakeOffAll();
 
-void loaderUp(){
-    loaderMech.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-    loaderMech.move(50);
-    pros::delay(1500);
-    loaderMech.move(0);
-}
+//     //Score
+//     chassis.turnAngle(270);
+//     intakeOnAll();
+//     chassis.moveDistance(12,2000);
+//     intakeOffAll();
+//     chassis.turnAngle(280);
+//     intakeTopScore();
+//     pros::delay(2500);
+//     // hump(150);
+//     // hump(150);
+//     // hump(150);
+//     // pros::delay(1250);
+//     chassis.turnAngle(270);
+//     intakeOffAll();
+//     chassis.moveDistance(-6);
+//     chassis.turnAngle(90);
+//     intakeOnAll();
+//     chassis.moveDistance(18, 2000);
 
-void matchAuto() {
-	//chassis.moveToPose(Pose(0,-32,0),1500,50);
-    //chassis.turnToAngle(90,1500);
-    /*intake.move(127);
-    chassis.moveToPose(Pose(-8,-32,0),1500,50);
-    hump(300);
-    hump(300);
-    hump(300);
-    hump(300);
-    hump(300);
-    hump(300);
-    hump(300);
+//     hump(300);
+//     hump(300);
+//     hump(300);
+//     hump(300);
+//     hump(300);
+//     hump(300);
+//     hump(300);
+//     hump(300);
+//     hump(300);
+//     hump(300);
+//     hump(300);
+//     hump(300);
+//     hump(300);
+//     hump(300);
+
+//     // //dump off
+//     // chassis.moveDistance(-6);
+//     // chassis.turnAngle(45);
+//     // intakeTopScore();
+//     // pros::delay(5000);
+//     // intakeOffAll();
+//     // chassis.turnAngle(90);
+//     // intakeOnAll();
+//     // chassis.moveDistance(8,1500);
     
-    chassis.moveToPose(Pose(-20,-32,0),1500,70);
-    middleScore.move(-127);
-    topScore.move(100);
-    pros::delay(1500);
-    //intake.move(0);
-    middleScore.move(0);
-    topScore.move(0); 
-    chassis.moveToPose(Pose(0,-32,0),1500,50);
-    chassis.turnToAngle(0,1500);
-    chassis.moveToPose(Pose(0,-40,0),1500,50);
-    chassis.turnToAngle(90,1500);
-    chassis.moveToPose(Pose(-20 ,-45,0),1500,50); */
+//     // hump(300);
+//     // hump(300);
+//     // hump(300);
+//     // hump(300);
+//     // hump(300);
+//     // hump(300);
+//     // hump(300);
 
-    /*chassis.moveDistance(45, 1500);
-	chassis.turnToAngle(90,1500);
-	//chassis.moveDistance(-35,2000);
-    topScore.move(100);
-    middleScore.move(127);
-    pros::delay(1500);
-    topScore.move(0);
-    middleScore.move(0);*/
-
-}
+//     chassis.moveDistance(-12, 3000);
+//     chassis.turnAngle(270);
+//     intakeOffAll();
+//     chassis.moveDistance(7,1000);
+//     chassis.turnAngle(285);
+//     intakeTopScore();
+//     pros::delay(4000);
+//     intakeOffAll();
+//     chassis.turnAngle(270);
+//}

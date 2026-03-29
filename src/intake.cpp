@@ -7,76 +7,73 @@ void intakeInitialize() {}
 //Intake functions 
 
 void intakeOnAll() {
-    intake.move(127);
+    intakeBottomFront.move(127);
+    intakeTopFront.move(127);
+    intakeBack.move(127);
 }
+
+//unused for now
+// void intakeOnAllAlternative() {
+//     intake.move(127);
+//     //motor19.move(-127);
+//     motor11.move(127);
+//     motor20.move(127);
+//     //18 normal
+//     middleScore.move(127);
+//     //17 inverted
+//     lowerTopScore.move(-127);
+//     //16 normal
+//     topScore.move(127);
+// }
 
 void intakeOffAll() {
-    intake.move(0);
-    middleScore.move(0);
-    topScore.move(0);
-
+    intakeBottomFront.move(0);
+    intakeTopFront.move(0);
+    intakeBack.move(0);
 }
 
-void intakeMiddleScore() {
-    middleScore.move(127);
-    intake.move(127);
+// void intakeMiddleScore() {
+//     middleScore.move(38.1);
+//     motor19.move(-127);
+//     motor11.move(-127);
+//     motor20.move(38.1);
+//     lowerTopScore.move(127);
+// }
 
-}
-
-void intakeTopScore() {
-    middleScore.move(-127);
-    topScore.move(60);
-    intake.move(217);
-}
+// void intakeTopScore() {
+//     middleScore.move(-127);
+//     motor19.move(-127);
+//     motor11.move(-127);
+//     topScore.move(127);
+//     lowerTopScore.move(127);
+//     motor20.move(127);
+// }
 
 void outtake() {
-    intake.move(-127);
+    intakeBottomFront.move(-67);
+    intakeTopFront.move(-67);
+    intakeBack.move(-67);
 }
 
-void loadingUp(){ 
-    loaderMech.set_brake_mode(MOTOR_BRAKE_HOLD);
-    loaderMech.move(127);
-}
-
-void loadingDown(){
-    loaderMech.set_brake_mode(MOTOR_BRAKE_COAST);
-    loaderMech.move(-127);
-    
-}
-
-
-void intakePeriodic() {
-    //All intake
-    if (controller.get_digital(DIGITAL_L2)) {
-        intakeOnAll();
-    }
-    //middlescore
-    else if (controller.get_digital(DIGITAL_R2)) {
-        intakeTopScore();
-    }
-    //topscore
-    //16 back 17 back 18 for 19 back
-    else if (controller.get_digital(DIGITAL_R1)) {
-    
-        intakeMiddleScore();
-    }
-    //outtake
-    else if (controller.get_digital(DIGITAL_X)) {
-        outtake();
-    }
-    else {
-        intakeOffAll();
-    }
-
-    // This is the loader mech for the intake, keep in mind this can break
-    // If it is run in one direction for too long
-    if(controller.get_digital(DIGITAL_UP)){
-        loadingUp();
-        
-    } else if(controller.get_digital(DIGITAL_DOWN)){
-        loadingDown();
-    } else{
-        loaderMech.move(0);
-    }
-
-}
+// void intakePeriodic() {
+//     //All intake
+//     if (controller.get_digital(DIGITAL_L2)) {
+//         intakeOnAll();
+//     }
+//     //middlescore
+//     else if (controller.get_digital(DIGITAL_R2)) {
+//         intakeMiddleScore();
+//     }
+//     //topscore
+//     //16 back 17 back 18 for 19 back
+//     else if (controller.get_digital(DIGITAL_R1)) {
+//         intakeTopScore();
+//     }
+//     //outtake
+//     else if (controller.get_digital(DIGITAL_X)) {
+//         outtake();
+//     }
+//     else {
+//         intakeOffAll();
+//     }
+// }
