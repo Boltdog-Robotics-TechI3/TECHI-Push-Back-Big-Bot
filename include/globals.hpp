@@ -18,12 +18,12 @@ inline double gear_ratio = 1;
 inline pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 // Motor Groups
-inline pros::MotorGroup rightMotors({2, 16});
-inline pros::MotorGroup leftMotors({-18, -15});
-inline pros::MotorGroup intakeBottomFront({-14, -13});
-inline pros::MotorGroup intakeTopFront({12, -1});
-inline pros::MotorGroup intakeBack({-17, -19, -20});
-inline pros::MotorGroup wingMech({-11});
+inline pros::MotorGroup rightMotors({3, 4});
+inline pros::MotorGroup leftMotors({-1, -2});
+inline pros::MotorGroup intakeRBWheel({7}); //Rubber Band Wheel
+inline pros::MotorGroup intakeTopFront({9});
+inline pros::MotorGroup intakeMain({5});
+inline pros::MotorGroup wingMech({12});
 // inline pros::Motor middleScore( -18);
 // inline pros::Motor motor19(19);
 // inline pros::Motor motor11(11);

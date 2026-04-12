@@ -4,8 +4,9 @@
 #include "lib/pid.hpp"
 #include "pros/misc.h"
 #include "autonomous.hpp"
+#include "pros/motors.h"
 #include <string>
-
+using namespace std;
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -17,6 +18,7 @@ void initialize() {
 	// initializeScreen();
 	// chassis.reset();
 	// chassis.setInputScale(Chassis::SINSQUARED);
+	wingMech.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 }
 
 /**
@@ -75,7 +77,8 @@ void opcontrol() {
 
 		chassis.arcade(leftY,rightX);
 		//controller.set_text(0,0, (chassis.getPose().to_string()));
-		controller.set_text(0,0, std::to_string((chassis.getPose().radToDeg(chassis.getPose().getTheta()))));
+		//controller.set_text(0,0, std::to_string((chassis.getPose().radToDeg(chassis.getPose().getTheta()))));
+		controller.set_text(0,0,to_string(wingMech.get_current_draw()));
 
 		//intakePeriodic();
 
@@ -99,36 +102,52 @@ void opcontrol() {
 			wingMech.move(0);
 		}
 
-		if (controller.get_digital_new_press(DIGITAL_X)) {
-			intakeBottomFront.move(127);
-			intakeTopFront.move(-127);
-			intakeBack.move(127);
-		}
-		else if (controller.get_digital_new_press(DIGITAL_B)) {
-			intakeBottomFront.move(-67);
-			intakeTopFront.move(-67);
-			intakeBack.move(-67);
-		}
-		else if (controller.get_digital_new_release(DIGITAL_X) || controller.get_digital_new_release(DIGITAL_B)) {
-			intakeBottomFront.move(0);
-			intakeTopFront.move(0);
-			intakeBack.move(0);
+		//Remove if wingmech is stopping early
+		if (wingMech.get_current_draw() > 2500) {
+			wingMech.move(0);
 		}
 
+		
+		// if (controller.get_digital_new_press(DIGITAL_X)) {
+		// 	intakeRBWheel.move(127);
+		// 	intakeTopFront.move(127);
+		// 	intakeMain.move(127);
+		// }
+		// else if (controller.get_digital_new_press(DIGITAL_B)) {
+		// 	intakeRBWheel.move(-67);
+		// 	intakeTopFront.move(-67);
+		// 	intakeMain.move(-67);
+		// }
+		// else if (controller.get_digital_new_release(DIGITAL_X) || controller.get_digital_new_release(DIGITAL_B)) {
+		// 	intakeRBWheel.move(0);
+		// 	intakeTopFront.move(0);
+		// 	intakeMain.move(0);
+		// }
+
+		//Intake
 		if (controller.get_digital_new_press(DIGITAL_R1)){
-			intakeBottomFront.move(127);
+			intakeRBWheel.move(-127);
 			intakeTopFront.move(-127);
-			intakeBack.move(127);
+			intakeMain.move(-127);
 		}
+		//Outtake
 		else if (controller.get_digital_new_press(DIGITAL_R2)) {
-			intakeBottomFront.move(127);
+			intakeRBWheel.move(127);
 			intakeTopFront.move(127);
-			intakeBack.move(127);
+			intakeMain.move(127);
 		}
-		else if (controller.get_digital_new_release(DIGITAL_R1) || controller.get_digital_new_release(DIGITAL_R2)) {
-			intakeBottomFront.move(0);
+		//Intake without scoring
+		else if (controller.get_digital_new_press(DIGITAL_X)) {
+			intakeMain.move(-127);
 			intakeTopFront.move(0);
-			intakeBack.move(0);
+			intakeRBWheel.move(0);
+		}
+		else if (controller.get_digital_new_release(DIGITAL_R1) 
+		|| controller.get_digital_new_release(DIGITAL_R2)
+		|| controller.get_digital_new_release(DIGITAL_X)) {
+			intakeRBWheel.move(0);
+			intakeTopFront.move(0);
+			intakeMain.move(0);
 		}
 
 		pros::delay(20);
