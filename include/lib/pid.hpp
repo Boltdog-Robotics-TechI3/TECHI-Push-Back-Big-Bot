@@ -31,7 +31,6 @@ class PIDController {
         double previousError;
         double accumulatedError;
         double previousOutput;
-
     public:
         /**
          * Constructor for the PID controller with inputs for the PID gains.
@@ -163,6 +162,13 @@ class PIDController {
          * @return the current error
          */
         double getError();
+
+        /**
+         * Returns the previous error between the current measurement and the setpoint.
+         * 
+         * @return the previous error between the current measurement and the setpoint.
+         */
+        double getPreviousError();
 
         /**
          * Gets the current setpoint of the PID controller.
