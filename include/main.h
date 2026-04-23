@@ -35,13 +35,13 @@
 #define PROS_USE_LITERALS
 
 #include "api.h"
+#include "liblvgl/lvgl.h"
 
 /**
  * You should add more #includes here
  */
 //#include "okapi/api.hpp"
-#include "liblvgl/lvgl.h"
-#include "screen.h"
+
 /**
  * If you find doing pros::Motor() to be tedious and you'd prefer just to do
  * Motor, you can use the namespace with the following commented out line.
