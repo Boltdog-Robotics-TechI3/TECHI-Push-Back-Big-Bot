@@ -1,62 +1,46 @@
 #pragma once
-
 // Libraries
-#include "api.h"
 #include "lib/api.hpp"
-#include "pros/adi.hpp"
-#include "pros/motors.hpp"
-#include "pros/optical.hpp"
-#include "pros/vision.h"
-#include <cstdint>
 
 // Bot measurements
-inline double wheel_diameter = 2.75;
-inline double track_width = 12;
-inline double gear_ratio = 1;
+inline double wheel_diameter = 3.25;
+inline double track_width = 11.0;
+inline double gear_ratio = 3.0/4.0;
 
 // Controller
 inline pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 // Motor Groups
-inline pros::MotorGroup rightMotors({3, 4});
-inline pros::MotorGroup leftMotors({-1, -2});
-inline pros::MotorGroup intakeRBWheel({7}); //Rubber Band Wheel
-inline pros::MotorGroup intakeTopFront({9});
-inline pros::MotorGroup intakeMain({5});
-inline pros::MotorGroup wingMech({12});
-// inline pros::Motor middleScore( -18);
-// inline pros::Motor motor19(19);
-// inline pros::Motor motor11(11);
-// inline pros::Motor motor20(20);
-// inline pros::Motor topScore( -16);
-// inline pros::Motor lowerTopScore(-17);
-// inline pros::adi::Pneumatics leftDescore((uint8_t)'A', true);
-// inline pros::adi::Pneumatics parkMech((uint8_t)'B', true);
+// cant tell which way for 11 bc shaft is out
+inline pros::MotorGroup rightMotors({-11, 13, -14, 12});
+// cant tell which way for 15 and 16 bc brain is broken
+inline pros::MotorGroup leftMotors({15, -16, 1, -2});
+//cant tell whic was bc brain again
+inline pros::Motor intake(17);
+inline pros::MotorGroup lever({-20, 10});
 
-// Chassis PID Controllers
-inline PIDController lateral(6, 0.0001 ,0.1); 
-inline PIDController turn(90, 0.0075, 0.1);
-inline PIDController align(45, 0, 0);
+// have not done this yet
+inline pros::adi::Pneumatics lift('b', false);
+inline pros::adi::Pneumatics hood('a', false, true);
+inline pros::adi::Pneumatics matchLoader('h', false);
+
 
 // Drivetrain
 inline TankDrivetrain drivetrain(&leftMotors, &rightMotors, wheel_diameter, track_width, gear_ratio);
 
 // Tracking Wheel
-inline pros::IMU imu(16);
-inline TrackingWheel horizontalTrackingWheel(3, 3.25, 0.25, WheelPosition::HORIZONTAL);
-inline TrackingWheel verticalTrackingWheel(-2, 3.25, -1.0, WheelPosition::VERTICAL);
+// have not done this yet
+inline pros::IMU imu(21);
+// TODO: Check tracking wheel offsets and diameters
+inline TrackingWheel horizontalTrackingWheel(9, 2.08, 1.25, WheelPosition::HORIZONTAL);
+inline TrackingWheel verticalTrackingWheel(-4, 2.08, 0, WheelPosition::VERTICAL);
 
 // Odometry
-inline OdomSensors odometry(&verticalTrackingWheel, &horizontalTrackingWheel, &imu);
-
+inline OdomSensors odometry(&verticalTrackingWheel,&horizontalTrackingWheel , &imu);
+inline PIDController lateral(5,0,0);
+inline PIDController turn(70,0,8.0);
+inline PIDController align(50,0,0);
 // Chassis
-inline TankChassis chassis(&drivetrain, &odometry, &lateral, &turn, &align);
+inline TankChassis chassis(&drivetrain, &odometry,&lateral,&turn,&align);
 
-// Comp Specifications
-inline bool skills = false;
-inline bool match = true;
-inline bool elim = false;
-inline bool qual = true;
-inline bool redAlliance = true;
-inline bool blueAlliance = false;
-inline int autoSelection = 0; 
+

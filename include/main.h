@@ -77,9 +77,10 @@ void opcontrol(void);
  */
 //#include <iostream>
 #include "lib/api.hpp"
-#include "util/timer.hpp"
 #include "globals.hpp"
-#include "intake.hpp"
+#include "subsystems/intake.hpp"
+#include "screen.h"
+
 #endif
 
 #endif  // _PROS_MAIN_H_

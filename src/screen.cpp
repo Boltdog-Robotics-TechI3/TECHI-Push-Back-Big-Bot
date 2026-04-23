@@ -1,11 +1,8 @@
 #include "main.h"
-
+int autoSelection=0;
 lv_obj_t* textBox1; // Text box for Button 1
 lv_obj_t* textBox2; // Text box for Button 2
 lv_obj_t* textBox3; // Text box for Button 3
-
-int autoselector;
-
 
 void initializeScreen() {
     // Get the screen's width and height
@@ -114,12 +111,12 @@ void onCenterButton() {
 	pressed = !pressed;
 	if (pressed) {
 		updateTextBox(textBox2, "Skills Run Selected");
-		skills = true;
-		match = false;
+		// skills = true;
+		// match = false;
 	} else {
 		updateTextBox(textBox2, "Match Selected");
-		skills = false;
-		match = true;
+		// skills = false;
+		// match = true;
 	}
 }
 
@@ -136,7 +133,7 @@ void onRightButton() {
 	
 	autoSelection++;
 
-	if (autoSelection >= 3) {
+	if (autoSelection >= 7) {
 		autoSelection = 0;
 	}
 	
@@ -144,16 +141,28 @@ void onRightButton() {
 		case 0: 
 			// Auto where we rush for the plus side goal, grab it, 
 			// then score rings on it and drop it off in the corner.
-			updateTextBox(textBox3, "0 - Sample Auto 1");
+			updateTextBox(textBox3, "0 -");
 			break;
 		case 1: 
 			// Auto where we rush for the plus side goal, grab it, 
 			// then drop it off and go for the alliance side goal instead.
-			updateTextBox(textBox3, "0 - Sample Auto 1");
+			updateTextBox(textBox3, "0 - ");
 			break;
 		case 2: 
-			updateTextBox(textBox3, "2 - Sample Auto 2");
-			break;         
+			updateTextBox(textBox3, "2 - ");
+			break;
+		case 3: 
+			updateTextBox(textBox3, "3 - ");
+			break;
+		case 4: 
+			updateTextBox(textBox3, "4 - ");
+			break;
+        case 5:
+            updateTextBox(textBox3, "5 - ");
+            break;   
+        case 6:
+ 			updateTextBox(textBox3, "5 - ");
+			break;           
 	}
 }
 
@@ -168,14 +177,14 @@ void onLeftButton() {
 	if (pressed) {
 		updateTextBox(textBox1, "Blue side is selected");
         styleTextBox(textBox1, lv_palette_main(LV_PALETTE_BLUE)); 
-		redAlliance = false;
-		blueAlliance = true;
+		// redAlliance = false;
+		// blueAlliance = true;
 
 	} else {
 		updateTextBox(textBox1, "Red side is selected");
         styleTextBox(textBox1, lv_palette_main(LV_PALETTE_RED)); 
 
-		blueAlliance = false;
-		redAlliance = true;
+		// blueAlliance = false;
+		// redAlliance = true;
 	}
 }
