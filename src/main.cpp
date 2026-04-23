@@ -1,24 +1,34 @@
 #include "main.h"
 #include "globals.hpp"
-#include "lib/chassis.hpp"
-#include "lib/pid.hpp"
-#include "pros/misc.h"
-#include "autonomous.hpp"
-#include "pros/motors.h"
+#include "subsystems/intake.hpp"
 #include <string>
-using namespace std;
+
+
+void wiggle(int speed){
+	for(int i=0; i<10; i++) {
+		leftMotors.move(speed+5);
+		rightMotors.move(-speed);
+		pros::delay(100);	
+		leftMotors.move(-speed);
+		rightMotors.move(speed+5);
+		pros::delay(100);
+	}
+}
+
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
  */
-void initialize() {
-	// parkMech.toggle();
-	// initializeScreen();
-	// chassis.reset();
-	// chassis.setInputScale(Chassis::SINSQUARED);
-	wingMech.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+void initialize()
+{
+
+	initializeScreen();
+	imu.reset(true);
+	chassis.reset();
+	intakeInitialize();
+	chassis.setBrakeMode(pros::E_MOTOR_BRAKE_COAST);
 }
 
 /**
@@ -50,8 +60,64 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {
-	// matchAuto();
+void autonomous() {			
+	// when making the auto make sure the speed is capped at 60% (127 *.6) so that
+	// the robot doesn't go past the error range.
+	Pose matchLoadStation({47, -63, 0});
+	chassis.startTracking();
+	matchLoader.retract();
+	chassis.setPose({14.5, -47.5, M_PI_2});
+	int maxSpeed = 127*0.6;
+	int lowSpeed = 127 * 0.4;
+	chassis.moveToPose({.targetPose = {46, -47.5, 0}, .timeout = 5000, .maxMoveSpeed = maxSpeed});
+	matchLoader.extend();
+	lift.extend();
+	chassis.turnToAngle({.targetAngle = 0});
+	hood.extend();
+	//startCounting();
+	intake.move(127);
+	chassis.moveToPose({.targetPose = matchLoadStation, .timeout = 1000, .maxMoveSpeed = 127});
+	//int time = pros::c::millis();
+	// while (blockCount < 3) {
+	// 	pros::delay(25); 
+	// 	//timeout
+	// 	if (pros::c::millis() - time < 5000)
+	// 		break;
+	// }
+	pros::delay(1000);
+	//controller.set_text(0,0, std::to_string(blockCount));
+	chassis.moveToPose({.targetPose = {47, -28.5, 0}, .timeout = 2000, .maxMoveSpeed = maxSpeed}); //goto score
+	wiggle(10);
+	// intake.move(0);
+	chassis.turnToAngle({.targetAngle = 0, .timeout = 1000});
+
+	fire(false);
+
+	// //go back to get the rest of the blocks
+	pros::delay(3000);
+
+	matchLoader.extend();
+	chassis.moveToPose({.targetPose = matchLoadStation, .timeout = 3000, .maxMoveSpeed = lowSpeed});
+	pros::delay(2500);
+
+	// Throw other alliance blocks in the corner
+	chassis.moveToPose({.targetPose = {47, -49.5, 0}, .timeout = 2500, .maxMoveSpeed = maxSpeed});
+	chassis.turnToAngle({.targetAngle = 225, .timeout = 2000});
+	hood.extend();
+	fire(false);
+	pros::delay(3000);
+
+	// Go back to match load
+	chassis.turnToAngle({.targetAngle = 0, .timeout = 1000});
+	chassis.moveToPose({.targetPose = matchLoadStation, .timeout = 3000, .maxMoveSpeed = lowSpeed});
+	pros::delay(5000);
+
+	// TODO: Score remaining blocks
+	chassis.moveToPose({.targetPose = {47, -28.5, 0}, .timeout = 2000, .maxMoveSpeed = maxSpeed});
+	controller.set_text(0, 0, chassis.getPose().to_string());
+	intake.move(0);
+
+
 }
 
 /**
@@ -67,89 +133,18 @@ void autonomous() {
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
+ 
 void opcontrol() {
-	bool parkMechPossible = true;
+	chassis.startTracking();
+	matchLoader.retract();
+	startCounting();
 	
-	
-	while (true) {
-		int leftY = controller.get_analog(ANALOG_LEFT_Y);
-		int rightX = controller.get_analog(ANALOG_RIGHT_X);
-
-		chassis.arcade(leftY,rightX);
-		//controller.set_text(0,0, (chassis.getPose().to_string()));
-		//controller.set_text(0,0, std::to_string((chassis.getPose().radToDeg(chassis.getPose().getTheta()))));
-		controller.set_text(0,0,to_string(wingMech.get_current_draw()));
-
-		//intakePeriodic();
-
-		if (controller.get_digital_new_press(DIGITAL_L1)) {
-			wingMech.move(-60);
-		}
-		else if (controller.get_digital_new_press(DIGITAL_L2)) {
-			wingMech.move(60);
-		}
-		else if (controller.get_digital_new_release(DIGITAL_L1) || controller.get_digital_new_release(DIGITAL_L2)) {
-			wingMech.move(0);
-		}
-
-		if (controller.get_digital_new_press(DIGITAL_DOWN)){
-			wingMech.move(127);
-		}
-		else if (controller.get_digital_new_press(DIGITAL_UP)){
-			wingMech.move(-127);
-		}
-		else if (controller.get_digital_new_release(DIGITAL_DOWN) || controller.get_digital_new_release(DIGITAL_UP)){
-			wingMech.move(0);
-		}
-
-		//Remove if wingmech is stopping early
-		if (wingMech.get_current_draw() > 2500) {
-			wingMech.move(0);
-		}
-
-		
-		// if (controller.get_digital_new_press(DIGITAL_X)) {
-		// 	intakeRBWheel.move(127);
-		// 	intakeTopFront.move(127);
-		// 	intakeMain.move(127);
-		// }
-		// else if (controller.get_digital_new_press(DIGITAL_B)) {
-		// 	intakeRBWheel.move(-67);
-		// 	intakeTopFront.move(-67);
-		// 	intakeMain.move(-67);
-		// }
-		// else if (controller.get_digital_new_release(DIGITAL_X) || controller.get_digital_new_release(DIGITAL_B)) {
-		// 	intakeRBWheel.move(0);
-		// 	intakeTopFront.move(0);
-		// 	intakeMain.move(0);
-		// }
-
-		//Intake
-		if (controller.get_digital_new_press(DIGITAL_R1)){
-			intakeRBWheel.move(-127);
-			intakeTopFront.move(-127);
-			intakeMain.move(-127);
-		}
-		//Outtake
-		else if (controller.get_digital_new_press(DIGITAL_R2)) {
-			intakeRBWheel.move(127);
-			intakeTopFront.move(127);
-			intakeMain.move(127);
-		}
-		//Intake without scoring
-		else if (controller.get_digital_new_press(DIGITAL_X)) {
-			intakeMain.move(-127);
-			intakeTopFront.move(0);
-			intakeRBWheel.move(0);
-		}
-		else if (controller.get_digital_new_release(DIGITAL_R1) 
-		|| controller.get_digital_new_release(DIGITAL_R2)
-		|| controller.get_digital_new_release(DIGITAL_X)) {
-			intakeRBWheel.move(0);
-			intakeTopFront.move(0);
-			intakeMain.move(0);
-		}
-
+	while(true) {
+		int throttle = controller.get_analog(ANALOG_LEFT_Y);
+		int turn = controller.get_analog(ANALOG_RIGHT_X);
+		chassis.arcade(throttle,turn);
+		controller.set_text(0,0,std::to_string(blockCount));
+		intakePeriodic();
 		pros::delay(20);
 	}
 }
