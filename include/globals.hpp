@@ -16,13 +16,13 @@ inline pros::MotorGroup rightMotors({-11, 13, -14, 12});
 // cant tell which way for 15 and 16 bc brain is broken
 inline pros::MotorGroup leftMotors({15, -16, 1, -2});
 //cant tell whic was bc brain again
-inline pros::Motor intake(17);
+inline pros::Motor intake(-17);
 inline pros::MotorGroup lever({-20, 10});
 
 // have not done this yet
-inline pros::adi::Pneumatics lift('b', false);
-inline pros::adi::Pneumatics hood('a', false, true);
-inline pros::adi::Pneumatics matchLoader('h', false);
+inline pros::adi::Pneumatics lift('f', false, true);
+inline pros::adi::Pneumatics hood('g', false, false);
+inline pros::adi::Pneumatics matchLoader('h', false, true);
 
 
 // Drivetrain
@@ -32,8 +32,8 @@ inline TankDrivetrain drivetrain(&leftMotors, &rightMotors, wheel_diameter, trac
 // have not done this yet
 inline pros::IMU imu(21);
 // TODO: Check tracking wheel offsets and diameters
-inline TrackingWheel horizontalTrackingWheel(9, 2.08, 1.25, WheelPosition::HORIZONTAL);
-inline TrackingWheel verticalTrackingWheel(-4, 2.08, 0, WheelPosition::VERTICAL);
+inline TrackingWheel horizontalTrackingWheel(4, 2.08, 1.25, WheelPosition::HORIZONTAL);
+inline TrackingWheel verticalTrackingWheel(9, 2.08, 0, WheelPosition::VERTICAL);
 
 // Odometry
 inline OdomSensors odometry(&verticalTrackingWheel,&horizontalTrackingWheel , &imu);

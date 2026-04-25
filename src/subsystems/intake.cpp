@@ -1,5 +1,6 @@
 #include "subsystems/intake.hpp"
 #include "globals.hpp"
+#include "pros/misc.h"
 #include "pros/motors.h"
 #include "pros/rtos.h"
 #include "pros/rtos.hpp"
@@ -24,6 +25,28 @@ namespace {
 }
 
 Timer *leverTimer = nullptr;
+
+//antijam
+
+void intakeJamHandler(void* param) {
+    int stallTime = -1;
+    while (true) {
+        if (intake.get_actual_velocity() == 0 && intake.get_target_velocity() > 0) {
+            if (stallTime == -1) {
+                stallTime = pros::millis();
+            } else if (pros::millis() - stallTime >= 150) {
+                intake.move(-127);
+                pros::delay(100);
+                intake.move(127);
+            }
+        } else {
+            stallTime = -1;
+        }
+        pros::delay(20);
+    }
+}
+
+//pros::Task intakeJamTask(intakeJamHandler);
 
 void intakeInitialize()
 {
@@ -108,25 +131,25 @@ void intakePeriodic()
 {
     // Intake
     if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
-        intake.move(-127);
-    } else if  (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
         intake.move(127);
+    } else if  (controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)) {
+        intake.move(-127);
     } else {
         intake.move(0);
     }
 
     // Lift
-    if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)){
+    if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)){
         lift.toggle();
     }
 
     // Match Load
-    if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_Y)){
+    if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)){
         matchLoader.toggle();
     }
 
     // hood and wing
-    if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
+    if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
         hood.extend();
     } else{
         hood.retract();
@@ -141,7 +164,7 @@ void intakePeriodic()
     }
 
     // middle goal lever
-    if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2) || (leverTimeoutReached == false && isMidScore == true)) {
+    if(controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_Y) || (leverTimeoutReached == false && isMidScore == true)) {
         isMidScore = true;
         hood.extend();
         leverTimeoutReached = false;
